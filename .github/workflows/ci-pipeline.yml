@@ -46,10 +46,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Unit Tests
+      - name: Run Unit Tests
         run: mvn test
 
-      - name: Integration Tests
+      - name: Run Integration Tests
         run: mvn verify
 
 
@@ -68,16 +68,19 @@ jobs:
           name: app-jar
           path: target
 
-      - name: Verify JAR exists
+      - name: Verify JAR
         run: ls -R target
 
+      - name: Set Image Name
+        run: echo "IMAGE=${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:${{ github.sha }}" >> $GITHUB_ENV
+
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:${{ github.sha }} .
+        run: docker build -t $IMAGE .
 
       - name: Save Docker Image
-        run: docker save -o image.tar ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:${{ github.sha }}
+        run: docker save -o image.tar $IMAGE
 
-      - name: Upload Docker Image
+      - name: Upload Docker Image Artifact
         uses: actions/upload-artifact@v4
         with:
           name: docker-image
