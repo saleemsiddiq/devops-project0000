@@ -71,6 +71,7 @@ jobs:
       - name: Verify JAR
         run: ls -R target
 
+      # 🔥 ADDED DOCKER IMAGE STEP (ONLY THIS NEW)
       - name: Set Image Name
         run: echo "IMAGE=${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:${{ github.sha }}" >> $GITHUB_ENV
 
