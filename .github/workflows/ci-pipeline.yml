@@ -71,9 +71,9 @@ jobs:
       - name: Verify JAR
         run: ls -R target
 
-      # 🔥 ADDED DOCKER IMAGE STEP (ONLY THIS NEW)
+      # 🔥 ONLY CHANGED PART START
       - name: Set Image Name
-        run: echo "IMAGE=${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:${{ github.sha }}" >> $GITHUB_ENV
+        run: echo "IMAGE=saleemsiddiq/springboot-app:${{ github.sha }}" >> $GITHUB_ENV
 
       - name: Build Docker Image
         run: docker build -t $IMAGE .
@@ -86,3 +86,4 @@ jobs:
         with:
           name: docker-image
           path: image.tar
+      # 🔥 ONLY CHANGED PART END
