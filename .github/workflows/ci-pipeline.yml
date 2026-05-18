@@ -59,7 +59,7 @@ jobs:
     needs: test
 
     steps:
-      - name: Checkout repository
+      - name: Checkout test
         uses: actions/checkout@v3
 
       - name: Download JAR Artifact
